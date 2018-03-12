@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InformationMapper">
+    <select id="findInfo" resultType="information" parameterType="java.util.Map">
+        SELECT * FROM T_W_INFORMATION WHERE 1=1 AND VISIBLE=#{visible}
+        <if test="lastTime!=null">
+            AND CREATE_DATE > #{lastTime}
+        </if>
+        <if test="shields!=null and shields!=''">
+            AND USER_ID NOT IN ($shields$)
+        </if>
+        <if test="infoIds!=null and infoIds!=''">
+            AND ID NOT IN ($infoIds$)
+        </if>
+        ORDER BY CREATE_DATE DESC LIMIT 10
+    </select>
+
+    <select id="findOfferInformation" parameterType="java.util.Map" resultType="information">
+        SELECT * FROM T_W_INFORMATION WHERE INFO_TYPE='2'
+        <if test="userId!=null and userId!=''">
+            AND USER_ID=#{userId}
+        </if>
+        ORDER BY CREATE_DATE DESC
+    </select>
+
+    <select id="findInfoByUserId" resultType="information" parameterType="java.util.Map">
+        SELECT * FROM T_W_INFORMATION WHERE 1=1
+        <if test="userId!=null and userId!=''">
+            AND USER_ID = #{userId}
+        </if>
+        <if test="visible!=null and visible!=''">
+            AND VISIBLE=#{visible}
+        </if>
+        ORDER BY CREATE_DATE DESC LIMIT #{pageNum},10
+    </select>
+
+    <delete id="deleteInfo" parameterType="java.util.Map">
+        DELETE FROM T_W_INFORMATION WHERE
+        <if test="id!=null and id!=''">
+            AND ID=#{id}
+        </if>
+        <if test="userId!=null and userId!=''">
+            AND USER_ID=#{userId}
+        </if>
+    </delete>
+
+    <select id="findThisMonthInfoCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT COUNT(1) FROM T_W_INFORMATION WHERE
+         USER_ID=#{userId}
+        AND DATE_FORMAT(CREATE_DATE,'%Y-%m')=DATE_FORMAT(now(),'%Y-%m')
+    </select>
+
+    </mapper>
