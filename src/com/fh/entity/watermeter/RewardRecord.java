@@ -24,9 +24,6 @@ public class RewardRecord implements Serializable {
     @Column(name = "USER_ID",length = 32)
     private String userId;
 
-    @Column(name = "COMMENT_ID",length = 32)
-    private String commentId;
-
     @Column(name = "REWARD_MONEY",length = 10)
     private String rewardMoney;
 
@@ -63,14 +60,6 @@ public class RewardRecord implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
     }
 
     public String getRewardMoney() {
