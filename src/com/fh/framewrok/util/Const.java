@@ -69,6 +69,10 @@ public class Const {
 
 	public static final String PAY_SERVICE_REWARD="3";//打赏
 
+	public static final String TRADE_SUCCESS="TRADE_SUCCESS";//支付成功
+
+
+
 
 
 	
