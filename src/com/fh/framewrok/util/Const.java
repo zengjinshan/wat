@@ -53,5 +53,23 @@ public class Const {
 	public static final String RESPONSE_STATUS_SUCCESS="1";//成功
 	public static final String RESPONSE_STATUS_0="0";//token过期
 	public static final String RESPONSE_STATUS_FAILED="-1";//失败
+
+	public static final String PAY_TYPE_ALIBABA="1";//支付宝
+	public static final String PAY_TYPE_WEIXIN="2";//微信
+
+	public static final String PAY_STATUS_FAIELD="-1";//支付失败
+
+	public static final String PAY_STATUS_SUCCESS="1";//支付成功
+
+	public static final String PAY_STATUS_PAYING="0";//支付中
+
+	public static final String PAY_SERVICE_RECHARGE="1";//充值
+
+	public static final String PAY_SERVICE_OFFER="2";//悬赏
+
+	public static final String PAY_SERVICE_REWARD="3";//打赏
+
+
+
 	
 }
