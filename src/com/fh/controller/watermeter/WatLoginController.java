@@ -6,6 +6,7 @@ import com.fh.entity.watermeter.*;
 import com.fh.framewrok.response.Token;
 import com.fh.framewrok.response.WatResponse;
 import com.fh.framewrok.util.*;
+import com.fh.service.watermeter.collect.CollectService;
 import com.fh.service.watermeter.comment.CommentService;
 import com.fh.service.watermeter.complaint.ComplaintService;
 import com.fh.service.watermeter.information.InformationService;
@@ -51,6 +52,9 @@ public class WatLoginController {
 
     @Autowired
     private ComplaintService complaintService;
+
+    @Autowired
+    private CollectService collectService;
 
     @RequestMapping(value = "sendSsm")
     @ResponseBody
@@ -955,6 +959,54 @@ public class WatLoginController {
             informationService.update(info);
             response.setStatus(Const.RESPONSE_STATUS_SUCCESS);
             response.setMsg("采纳成功");
+        }catch (Exception e){
+            log.error(e.getMessage(), e);
+            response.setStatus(Const.RESPONSE_STATUS_FAILED);
+            response.setMsg("发送失败,系统错误");
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "collect")
+    @ResponseBody
+    public WatResponse collect(@RequestParam("kId") String kId,
+                               @RequestParam("infoId") String infoId){
+        WatResponse response = new WatResponse();
+        Token token = UserInfoCache.getToken(kId);
+        if (token == null) {
+            response.setStatus(Const.RESPONSE_STATUS_0);
+            response.setMsg("token过期，请重新登录");
+            return response;
+        }
+        WatUser user = token.getUser();
+        try{
+            collectService.saveCollect(user,infoId);
+            response.setStatus(Const.RESPONSE_STATUS_SUCCESS);
+            response.setMsg("收藏成功");
+        }catch (Exception e){
+            log.error(e.getMessage(), e);
+            response.setStatus(Const.RESPONSE_STATUS_FAILED);
+            response.setMsg("发送失败,系统错误");
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "collectList")
+    @ResponseBody
+    public WatResponse collectList(@RequestParam("kId") String kId){
+        WatResponse response = new WatResponse();
+        Token token = UserInfoCache.getToken(kId);
+        if (token == null) {
+            response.setStatus(Const.RESPONSE_STATUS_0);
+            response.setMsg("token过期，请重新登录");
+            return response;
+        }
+        WatUser user = token.getUser();
+        try{
+            List<CollectVo> collectList = collectService.findCollectList(user);
+            response.setStatus(Const.RESPONSE_STATUS_SUCCESS);
+            response.setMsg("查询成功");
+            response.setObj(collectList);
         }catch (Exception e){
             log.error(e.getMessage(), e);
             response.setStatus(Const.RESPONSE_STATUS_FAILED);

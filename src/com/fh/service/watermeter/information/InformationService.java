@@ -71,8 +71,10 @@ public class InformationService extends BaseService{
             vo.setAdoptCommentId(info.getAdoptCommentId()!=null?info.getAdoptCommentId():"");
             List<Attachment> attas = this.findListByField(Attachment.class, "serviceId", info.getId());
             ArrayList<String> files=new ArrayList<String>();
-            for(Attachment atta:attas){
-                files.add(atta.getFilePath());
+            if(attas!=null){
+                for(Attachment atta:attas){
+                    files.add(atta.getFilePath());
+                }
             }
             vo.setFiles(files);
             vos.add(vo);
@@ -106,8 +108,10 @@ public class InformationService extends BaseService{
             detail.setAdoptCommentId(infomation.getAdoptCommentId());
             List<Attachment> attas = this.findListByField(Attachment.class, "serviceId", id);
             ArrayList<String> files=new ArrayList<String>();
-            for(Attachment atta:attas){
-                files.add(atta.getFilePath());
+            if(attas!=null){
+                for(Attachment atta:attas){
+                    files.add(atta.getFilePath());
+                }
             }
             detail.setFiles(files);
             List<CommentVo> commentVos = commentService.commentList(id);
@@ -149,8 +153,10 @@ public class InformationService extends BaseService{
             vo.setForwardNum(info.getForwardNum());
             List<Attachment> attas = this.findListByField(Attachment.class, "serviceId", info.getId());
             ArrayList<String> files=new ArrayList<String>();
-            for(Attachment atta:attas){
-                files.add(atta.getFilePath());
+            if(attas!=null){
+                for(Attachment atta:attas){
+                    files.add(atta.getFilePath());
+                }
             }
             vo.setFiles(files);
             vos.add(vo);
