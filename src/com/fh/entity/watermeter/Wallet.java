@@ -24,6 +24,28 @@ public class Wallet implements Serializable{
     @Column(name = "BALANCE")
     private BigDecimal balance;
 
+    @Column(name = "ALIPAY_ACOUNT")
+    private String alipayAcount;//支付宝账户
+
+    @Column(name = "WX_ACOUNT")
+    private String wxAcount;
+
+    public String getAlipayAcount() {
+        return alipayAcount;
+    }
+
+    public void setAlipayAcount(String alipayAcount) {
+        this.alipayAcount = alipayAcount;
+    }
+
+    public String getWxAcount() {
+        return wxAcount;
+    }
+
+    public void setWxAcount(String wxAcount) {
+        this.wxAcount = wxAcount;
+    }
+
     public String getUserId() {
         return userId;
     }

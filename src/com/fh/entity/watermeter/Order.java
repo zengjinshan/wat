@@ -25,10 +25,10 @@ public class Order implements Serializable {
     private String payUserId;
 
     @Column(name = "PAY_TYPE",length = 1)
-    private String payType;//1:充值  2:悬赏 3：打赏
+    private String payType;//1:充值  2:悬赏 3：打赏 4:转账
 
     @Column(name = "CHANNEL",length = 1)
-    private String channel;//支付渠道 1：支付宝 2：微信
+    private String channel;//支付渠道 1：支付宝 2：微信 3：钱包
 
     @Column(name = "CREATE_DATE")
     private Date createDate;//订单生产时间
@@ -39,6 +39,27 @@ public class Order implements Serializable {
     @Column(name = "DESCRIB",length = 300)
     private String describ;//订单描述
 
+    @Column(name = "BY_PAY_USER_ID",length = 32)
+    private String byPayUserId;
+
+    @Column(name = "INFO_ID",length = 32)
+    private String infoId;
+
+    public String getByPayUserId() {
+        return byPayUserId;
+    }
+
+    public void setByPayUserId(String byPayUserId) {
+        this.byPayUserId = byPayUserId;
+    }
+
+    public String getInfoId() {
+        return infoId;
+    }
+
+    public void setInfoId(String infoId) {
+        this.infoId = infoId;
+    }
 
     public String getId() {
         return id;

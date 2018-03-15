@@ -69,7 +69,17 @@ public class Const {
 
 	public static final String PAY_SERVICE_REWARD="3";//打赏
 
+	public static final String PAY_SERVICE_TRANSFER="4";//转账
+
+	public static final String PAY_SERVICE_CASH="5";//提现
+
 	public static final String TRADE_SUCCESS="TRADE_SUCCESS";//支付成功
+
+	public static final String BILL_TYPE_PAID="1";//支出
+
+	public static final String BILL_TYPE_INCOME="2";//收入
+
+
 
 
 
