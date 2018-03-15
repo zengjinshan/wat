@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.SimpleFormatter;
@@ -132,13 +133,14 @@ public class WatLoginController {
                         user.setImg(Const.DEFAULT_IMG);
                         String qrCodeName = UuidUtil.get32UUID() + ".png";
                         String filepath = WaterProperty.getPropertyValue("filepath")+qrCodeName;
-                        // String filePath = PathUtil.getClasspath() + Const.FILEPATHTWODIMENSIONCODE + qrCodeName;  //存放路径
                         TwoDimensionCode.encoderQRCode(telPhone, filepath, "png");
-                      /*  File srcFile=new File(filePath);
-                        File destFile=new File(filepath+qrCodeName);
-                        FileUtils.moveFile(srcFile,destFile);*///移动上传文件到tomcat映射文件目录
                         user.setQrCodeImg(Const.DEFAULT_PATH + qrCodeName);
                         userService.save(user);
+                        Wallet wallet=new Wallet();
+                        wallet.setUserId(user.getId());
+                        wallet.setBalance(new BigDecimal(0));
+                        wallet.setPayPassword("");
+                        userService.save(wallet);
                         response.setMsg("注册成功！");
                         phoneSsm.setValidInd("0");
                         userService.update(phoneSsm);
@@ -361,7 +363,7 @@ public class WatLoginController {
                 UserInfoCache.updateToken(token);
                 response.setMsg("上传成功");
                 response.setStatus(Const.RESPONSE_STATUS_SUCCESS);
-                response.setObj(filepath + fileName);
+                response.setObj(Const.DEFAULT_PATH + fileName);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 response.setStatus(Const.RESPONSE_STATUS_FAILED);
@@ -1015,8 +1017,39 @@ public class WatLoginController {
         return response;
     }
 
-
-
+    @RequestMapping(value = "checkPayPwd")
+    @ResponseBody
+    public WatResponse checkPayPwd(@RequestParam("kId") String kId,@RequestParam("payPassword") String payPassword){
+        WatResponse response = new WatResponse();
+        Token token = UserInfoCache.getToken(kId);
+        if (token == null) {
+            response.setStatus(Const.RESPONSE_STATUS_0);
+            response.setMsg("token过期，请重新登录");
+            return response;
+        }
+        WatUser user = token.getUser();
+        try{
+            Wallet wallet= (Wallet) userService.find(Wallet.class,user.getId());
+            if(wallet!=null){
+                if(wallet.getPayPassword().equals(payPassword)){
+                    response.setStatus(Const.RESPONSE_STATUS_SUCCESS);
+                    response.setMsg("验证通过");
+                }else {
+                    response.setStatus(Const.RESPONSE_STATUS_FAILED);
+                    response.setMsg("验证失败，支付密码错误");
+                }
+            }else {
+                response.setStatus(Const.RESPONSE_STATUS_FAILED);
+                response.setMsg("验证失败");
+            }
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
+            response.setStatus(Const.RESPONSE_STATUS_FAILED);
+            response.setMsg("发送失败,系统错误");
+        }
+        return response;
+    }
 
 
 }

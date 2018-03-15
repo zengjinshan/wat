@@ -38,7 +38,10 @@
             ,SEX=#{sex}
         </if>
         <if test="tag!=null and tag!=''">
-            TAG=#{tag}
+            ,TAG=#{tag}
+        </if>
+        <if test="img!=null and img!=''">
+            ,IMG=#{img}
         </if>
         WHERE id=#{id}
     </update>
