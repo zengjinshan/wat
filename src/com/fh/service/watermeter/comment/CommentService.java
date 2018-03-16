@@ -31,6 +31,7 @@ public class CommentService extends BaseService {
 
     public void comment(WatUser user,String infoId,String content) throws Exception {
         Information info= (Information) this.find(Information.class,infoId);
+        WatUser watUser= (WatUser) this.find(WatUser.class,info.getUserId());
         Comment comment=new Comment();
         comment.setId(UuidUtil.get32UUID());
         comment.setInfoId(infoId);
@@ -38,7 +39,7 @@ public class CommentService extends BaseService {
         comment.setObserverId(user.getId());
         comment.setCommentContent(content);
         comment.setCreateDate(new Date());
-        comment.setByObserver(info.getNickName());
+        comment.setByObserver(watUser.getNickName());
         comment.setByObserverId(info.getUserId());
         comment.setCommentInfoType(info.getInfoType());
         comment.setCommentContentType(info.getContentType());
