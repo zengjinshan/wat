@@ -68,6 +68,7 @@ public class InformationService extends BaseService{
     public InfoDetail infoDetail(String id,WatUser user) throws Exception {
         InfoDetail detail=new InfoDetail();
         Information infomation = (Information) this.find(Information.class, id);
+        WatUser watUser= (WatUser) this.find(WatUser.class,infomation.getUserId());
         if(infomation!=null){
             if(!infomation.getUserId().equals(user.getId())){
                 infomation.setReadNum(infomation.getReadNum()+1);
@@ -80,12 +81,12 @@ public class InformationService extends BaseService{
             detail.setContentType(infomation.getContentType());
             detail.setCreateDate(DateFormatUtils.format(infomation.getCreateDate(),"yyyy-MM-dd HH:mm:ss"));
             detail.setForwardNum(infomation.getForwardNum());
-            detail.setNickName(user.getNickName());
+            detail.setNickName(watUser.getNickName());
             detail.setOfferMoney(infomation.getOfferMoney()!=null?infomation.getOfferMoney():"");
-            detail.setTag(user.getTag()!=null?user.getTag():"");
+            detail.setTag(watUser.getTag()!=null?watUser.getTag():"");
             detail.setPraiseNum(infomation.getPraiseNum());
             detail.setShieldNum(infomation.getShieldNum());
-            detail.setUserImg(user.getImg());
+            detail.setUserImg(watUser.getImg());
             detail.setUserId(infomation.getUserId());
             detail.setPhoneName(infomation.getPhoneName());
             detail.setAdoptCommentId(infomation.getAdoptCommentId());
@@ -177,7 +178,26 @@ public class InformationService extends BaseService{
     public List<InformationVo> findOfferInformation(WatUser user) throws Exception{
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("userId",user.getId());
-        List list = this.queryForListBySql(mapper + "findOfferInformation", map);
+        List<InformationVo> list = this.queryForListBySql(mapper + "findOfferInformation", map);
+        if(list!=null&&list.size()>0){
+            for (InformationVo vo:list){
+                vo.setOfferMoney(vo.getOfferMoney()!=null?vo.getOfferMoney():"");
+                vo.setOfferTime(vo.getOfferTime()!=null?vo.getOfferTime().toString():"");
+                vo.setTag(vo.getTag()!=null?vo.getTag():"");
+                vo.setAdoptCommentId(vo.getAdoptCommentId()!=null?vo.getAdoptCommentId():"");
+                List<Attachment> attas = this.findListByField(Attachment.class, "serviceId", vo.getId());
+                ArrayList<String> files=new ArrayList<String>();
+                if(attas!=null){
+                    for(Attachment atta:attas){
+                        files.add(atta.getFilePath());
+                    }
+                }
+                vo.setFiles(files);
+                list.add(vo);
+            }
+        }else{
+            list=new ArrayList();
+        }
         return list;
     }
 

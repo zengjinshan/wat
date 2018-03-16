@@ -35,8 +35,26 @@
         ORDER BY i.CREATE_DATE DESC LIMIT 10
     </select>
 
-    <select id="findOfferInformation" parameterType="java.util.Map" resultType="information">
-        SELECT * FROM T_W_INFORMATION WHERE INFO_TYPE='2'
+    <select id="findOfferInformation" parameterType="java.util.Map" resultType="informationVo">
+        SELECT i.USER_ID,
+        i.content,
+        date_format(i.create_date,'%Y-%m-%d %H:%i:%s') AS create_date,
+        u.nick_name,
+        u.tag,
+        i.info_type,
+        i.praise_num,
+        i.comment_num,
+        i.forward_num,
+        i.shield_num,
+        u.img AS userImg,
+        i.forward_info,
+        i.content_type,
+        i.offer_money,
+        i.offer_time,
+        i.forward_ind,
+        i.phone_name,
+        i.adopt_comment_id FROM T_W_INFORMATION  i LEFT JOIN T_W_USER u ON u.id=i.user_id
+        WHERE INFO_TYPE='2'
         <if test="userId!=null and userId!=''">
             AND USER_ID=#{userId}
         </if>
