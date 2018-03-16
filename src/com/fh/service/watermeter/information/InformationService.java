@@ -8,6 +8,7 @@ import com.fh.entity.watermeter.Attachment;
 import com.fh.entity.watermeter.Information;
 import com.fh.entity.watermeter.WatUser;
 import com.fh.framewrok.service.BaseService;
+import com.fh.framewrok.util.UserInfoCache;
 import com.fh.service.watermeter.comment.CommentService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -43,41 +44,23 @@ public class InformationService extends BaseService{
         if(infoIds.lastIndexOf(",")==(infoIds.length()-1)&& StringUtils.isNotEmpty(infoIds)){
             map.put("infoIds",infoIds.substring(0,infoIds.length()-1));
         }
-        List<Information> list = this.queryForListBySql(mapper + "findInfo", map);
-        InformationVo vo=null;
-        for (Information info:list){
-             vo=new InformationVo();
-            vo.setId(info.getId());
-            vo.setInfoType(info.getInfoType());
-            vo.setCommentNum(info.getCommentNum());
-            vo.setContent(info.getContent());
-            vo.setContentType(info.getContentType());
-            Date createDate = info.getCreateDate();
-            String format = DateFormatUtils.format(createDate, "yyyy-MM-dd HH:mm:ss SSS");
-            vo.setCreateDate(format);
-            vo.setForwardInfo(info.getForwardInfo());
-            vo.setNickName(info.getNickName());
-            vo.setInfoType(info.getInfoType());
-            vo.setForwardNum(info.getForwardNum());
-            vo.setOfferMoney(info.getOfferMoney()!=null?info.getOfferMoney():"");
-            vo.setOfferTime(info.getOfferTime()!=null?info.getOfferTime().toString():"");
-            vo.setPraiseNum(info.getPraiseNum());
-            vo.setShieldNum(info.getShieldNum());
-            vo.setTag(info.getTag()!=null?info.getTag():"");
-            vo.setUserId(info.getUserId());
-            vo.setUserImg(info.getUserImg());
-            vo.setForwardInd(info.getForwardInd());
-            vo.setPhoneName(info.getPhoneName());
-            vo.setAdoptCommentId(info.getAdoptCommentId()!=null?info.getAdoptCommentId():"");
-            List<Attachment> attas = this.findListByField(Attachment.class, "serviceId", info.getId());
-            ArrayList<String> files=new ArrayList<String>();
-            if(attas!=null){
-                for(Attachment atta:attas){
-                    files.add(atta.getFilePath());
+        List<InformationVo> list = this.queryForListBySql(mapper + "findInfo", map);
+        if(list!=null&&list.size()>0){
+            for (InformationVo vo:list){
+                vo.setOfferMoney(vo.getOfferMoney()!=null?vo.getOfferMoney():"");
+                vo.setOfferTime(vo.getOfferTime()!=null?vo.getOfferTime().toString():"");
+                vo.setTag(vo.getTag()!=null?vo.getTag():"");
+                vo.setAdoptCommentId(vo.getAdoptCommentId()!=null?vo.getAdoptCommentId():"");
+                List<Attachment> attas = this.findListByField(Attachment.class, "serviceId", vo.getId());
+                ArrayList<String> files=new ArrayList<String>();
+                if(attas!=null){
+                    for(Attachment atta:attas){
+                        files.add(atta.getFilePath());
+                    }
                 }
+                vo.setFiles(files);
+                vos.add(vo);
             }
-            vo.setFiles(files);
-            vos.add(vo);
         }
         return vos;
     }
@@ -97,12 +80,12 @@ public class InformationService extends BaseService{
             detail.setContentType(infomation.getContentType());
             detail.setCreateDate(DateFormatUtils.format(infomation.getCreateDate(),"yyyy-MM-dd HH:mm:ss"));
             detail.setForwardNum(infomation.getForwardNum());
-            detail.setNickName(infomation.getNickName());
+            detail.setNickName(user.getNickName());
             detail.setOfferMoney(infomation.getOfferMoney()!=null?infomation.getOfferMoney():"");
-            detail.setTag(infomation.getTag()!=null?infomation.getTag():"");
+            detail.setTag(user.getTag()!=null?user.getTag():"");
             detail.setPraiseNum(infomation.getPraiseNum());
             detail.setShieldNum(infomation.getShieldNum());
-            detail.setUserImg(infomation.getUserImg());
+            detail.setUserImg(user.getImg());
             detail.setUserId(infomation.getUserId());
             detail.setPhoneName(infomation.getPhoneName());
             detail.setAdoptCommentId(infomation.getAdoptCommentId());
@@ -130,6 +113,7 @@ public class InformationService extends BaseService{
         }
         map.put("userId",userId);
         map.put("pageNum",(pageNum-1)*10);
+        WatUser watUser= (WatUser) this.find(WatUser.class,userId);
         List<Information> list = this.queryForListBySql(mapper+"findInfoByUserId",map);
         MyAlbumVo vo=null;
         for (Information info:list){
@@ -142,7 +126,7 @@ public class InformationService extends BaseService{
             Date createDate = info.getCreateDate();
             String format = DateFormatUtils.format(createDate, "yyyy-MM-dd HH:mm:ss SSS");
             vo.setCreateDate(format);
-            vo.setNickName(info.getNickName());
+            vo.setNickName(watUser.getNickName());
             vo.setInfoType(info.getInfoType());
             vo.setOfferMoney(info.getOfferMoney()!=null?info.getOfferMoney():"");
             vo.setOfferTime(info.getOfferTime()!=null?info.getOfferTime().toString():"");

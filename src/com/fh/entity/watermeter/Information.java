@@ -24,12 +24,6 @@ public class Information implements Serializable {
     @Column(name = "CREATE_DATE")
     private Date createDate;
 
-    @Column(name = "NICK_NAME",length = 60)
-    private String nickName;
-
-    @Column(name = "TAG",length = 500)
-    private String tag;
-
     @Column(name = "INFO_TYPE",length = 1)
     private String infoType;//大圈消息类型 1：普通消息 2：悬赏 3：求赏
 
@@ -44,9 +38,6 @@ public class Information implements Serializable {
 
     @Column(name = "SHIELD_NUM")
     private Integer shieldNum=0;//屏蔽数
-
-    @Column(name = "USER_IMG",length = 300)
-    private String userImg;
 
     @Column(name = "FORWARD_INFO",length = 2000)
     private String forwardInfo;
@@ -163,21 +154,6 @@ public class Information implements Serializable {
         this.createDate = createDate;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
 
     public String getInfoType() {
         return infoType;
@@ -219,13 +195,6 @@ public class Information implements Serializable {
         this.shieldNum = shieldNum;
     }
 
-    public String getUserImg() {
-        return userImg;
-    }
-
-    public void setUserImg(String userImg) {
-        this.userImg = userImg;
-    }
 
     public String getForwardInfo() {
         return forwardInfo;

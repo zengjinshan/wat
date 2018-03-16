@@ -511,16 +511,13 @@ public class WatLoginController {
             info.setContentType(contentType);
             info.setForwardNum(0);
             info.setInfoType(infoType);
-            info.setNickName(user.getNickName());
             info.setOfferMoney(offerMoney);
             if (!StringUtils.isEmpty(offerTime)) {
                 info.setOfferTime(Integer.parseInt(offerTime));
             }
             info.setPraiseNum(0);
             info.setShieldNum(0);
-            info.setTag(user.getTag());
             info.setUserId(user.getId());
-            info.setUserImg(user.getImg());
             info.setForwardInd("0");
             info.setPhoneName(phoneName);
             informationService.save(info);
