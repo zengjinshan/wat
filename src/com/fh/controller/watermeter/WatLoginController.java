@@ -180,12 +180,6 @@ public class WatLoginController {
                 map.put("validInd", "1");
                 WatUser user = (WatUser) userService.findObjectByFields(WatUser.class, map);
                 if (user != null) {
-                    if (SexEnum.MAN.getValue().equals(user.getSex())) {
-                        user.setSex(SexEnum.MAN.getName());
-                    }
-                    if (SexEnum.WOMEN.getValue().equals(user.getSex())) {
-                        user.setSex(SexEnum.WOMEN.getName());
-                    }
                     Token token = UserInfoCache.putToken(user);
                     response.setObj(token);
                     response.setMsg("登录成功");

@@ -48,12 +48,6 @@ public class WatUserService extends BaseService {
     }
 
     public void updateUser(WatUser user)throws Exception{
-        if(user.getSex().equals(SexEnum.MAN.getName())){
-            user.setSex(SexEnum.MAN.getValue());
-        }
-        if(user.getSex().equals(SexEnum.WOMEN.getName())){
-            user.setSex(SexEnum.WOMEN.getValue());
-        }
         this.updateBySql(mapper+"updateUser",user);
     }
 

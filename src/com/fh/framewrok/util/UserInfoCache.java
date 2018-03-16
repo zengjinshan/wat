@@ -16,6 +16,8 @@ public class UserInfoCache {
 
     private final static Map<String,Token> userMap=new HashMap<String,Token>();
 
+
+
     public static Token getToken(String key){
         Token token =  userMap.get(key);
         return token;
