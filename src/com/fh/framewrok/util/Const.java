@@ -32,7 +32,7 @@ public class Const {
 	public static final String FILEPATHIMG = "uploadFiles/uploadImgs/";	//图片上传路径
 	public static final String FILEPATHFILE = "uploadFiles/file/";		//文件上传路径
 	public static final String FILEPATHTWODIMENSIONCODE = "uploadFiles/twoDimensionCode/"; //二维码存放路径
-	public static final String NO_INTERCEPTOR_PATH = ".*/((login)|(logout)|(code)|(app)|(weixin)|(static)|(main)|(websocket)|(znzz)|(plugins)|(uploadFiles)|(wlsb)|(wat)).*";	//不对匹配该值的访问路径拦截（正则）
+	public static final String NO_INTERCEPTOR_PATH = ".*/((login)|(logout)|(code)|(app)|(weixin)|(static)|(main)|(websocket)|(demo)|(plugins)|(uploadFiles)|(wx)).*";	//不对匹配该值的访问路径拦截（正则）
 	public static ApplicationContext WEB_APP_CONTEXT = null; //该值会在web容器启动时由WebAppContextListener初始化
 	
 	/**
@@ -64,21 +64,6 @@ public class Const {
 	public static final String PAY_STATUS_PAYING="0";//支付中
 
 	public static final String PAY_SERVICE_RECHARGE="1";//充值
-
-	public static final String PAY_SERVICE_OFFER="2";//悬赏
-
-	public static final String PAY_SERVICE_REWARD="3";//打赏
-
-	public static final String PAY_SERVICE_TRANSFER="4";//转账
-
-	public static final String PAY_SERVICE_CASH="5";//提现
-
-	public static final String TRADE_SUCCESS="TRADE_SUCCESS";//支付成功
-
-	public static final String BILL_TYPE_PAID="1";//支出
-
-	public static final String BILL_TYPE_INCOME="2";//收入
-
 
 
 

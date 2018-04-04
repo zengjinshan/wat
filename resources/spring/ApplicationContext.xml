@@ -168,15 +168,14 @@
 	           	/app**/** 					= anon
 	           	/weixin/** 					= anon
 				/services/**                = anon
-				/znzz/**                    = anon
+				/demo/**                    = anon
 				/plugins/**                 = anon
-				/wlsb/**               = anon
 				/wat/**                     = anon
 	           	/**							= authc
 				</value>
 			</property>
 		</bean>
 	<!-- ================ Shiro end ================ -->
-	<import resource="ApplicationContext-redis.xml"/>
+	<!--<import resource="ApplicationContext-redis.xml"/>-->
    
 </beans>

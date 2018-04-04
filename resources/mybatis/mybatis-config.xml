@@ -14,16 +14,9 @@
 		<typeAlias type="com.fh.entity.system.User" alias="User"/>
 		<typeAlias type="com.fh.entity.system.Role" alias="Role"/>
 		<typeAlias type="com.fh.entity.system.Menu" alias="Menu"/>
-		<typeAlias type="com.fh.entity.watermeter.PhoneSsm" alias="phoneSsm"/>
 		<typeAlias type="com.fh.entity.system.Dictionaries" alias="Dictionaries"/>
 		<typeAlias type="com.fh.entity.system.Department" alias="Department"/>
 		<typeAlias type="com.fh.framewrok.util.PageData" alias="pd"/>
-		<typeAlias type="com.fh.entity.watermeter.WatUser" alias="watUser"/>
-		<typeAlias type="com.fh.entity.watermeter.Information" alias="information"/>
-		<typeAlias type="com.fh.entity.vo.InformationVo"  alias="informationVo"/>
-		<typeAlias type="com.fh.entity.vo.CommentVo" alias="commentVo"/>
-		<typeAlias type="com.fh.entity.vo.RelateToMeVo" alias="relateToMeVo"/>
-		<typeAlias type="com.fh.entity.vo.PraiseVo" alias="praiseVo"/>
 		<!-- 分页 -->
 		<typeAlias type="com.fh.entity.Page" alias="Page"/>
 	</typeAliases>
